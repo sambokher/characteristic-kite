@@ -100,13 +100,13 @@
     function advanceSnake() {
       if (dx === 0 && dy === 0) return;
 
-      const head = { x: snake[0].x + dx, y: snake[0].y + dy };
+      let head = { x: snake[0].x + dx, y: snake[0].y + dy };
 
-      // Wall collision
-      if (head.x < 0 || head.x >= tileCount || head.y < 0 || head.y >= tileCount) {
-        gameOver();
-        return;
-      }
+      // Pass through walls (wrapping)
+      if (head.x < 0) head.x = tileCount - 1;
+      if (head.x >= tileCount) head.x = 0;
+      if (head.y < 0) head.y = tileCount - 1;
+      if (head.y >= tileCount) head.y = 0;
 
       // Self collision
       for (let i = 0; i < snake.length; i++) {
